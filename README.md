@@ -1,32 +1,37 @@
 # AI Games Arcade
 
-A collection of AI-generated, client-side-only browser games. No servers, no frameworks — just HTML, CSS, and JavaScript.
+A collection of AI-generated, client-side-only browser games. No servers, no build steps — just static files served directly in the browser.
 
-## Structure
+> **Frameworks & Libraries Are Welcome** — You may use external frameworks and libraries (CSS frameworks, game engines, utility libraries, etc.) as long as they can be imported directly into the page via `<script>` or `<link>` tags (e.g. from a CDN). No package managers or build systems required.
 
-```
-ai-games/
-├── index.html          # Landing page
-├── styles.css          # Shared styles
-├── games/
-│   ├── gravity-drop/   # Each game lives in its own folder
-│   │   └── index.html
-│   ├── neon-snake/
-│   │   └── index.html
-│   └── pixel-maze/
-│       └── index.html
-```
+## Games
 
-## Adding a New Game
+| Game | Description |
+|------|-------------|
+| [Gravity Drop](games/gravity-drop/index.html) | Guide a falling orb through shifting gravity fields |
+| [Neon Snake](games/neon-snake/index.html) | Classic snake reimagined with neon visuals |
+| [Pixel Maze](games/pixel-maze/index.html) | Navigate procedurally generated mazes |
 
-1. Create a new folder under `games/` (e.g. `games/my-game/`).
-2. Add an `index.html` inside it — this is the game's entry point.
-3. Add a card to the landing page (`index.html`) linking to your game.
-
-## Running
+## Running Locally
 
 Open `index.html` in any browser, or serve with:
 
 ```sh
 npx -y serve .
 ```
+
+## Project Structure
+
+```
+ai-games/
+├── index.html          # Landing page
+├── styles.css          # Shared styles
+├── AGENTS.md           # AI agent instructions
+├── games/
+│   └── <game-name>/    # Each game in its own folder
+│       └── index.html
+```
+
+## Contributing (for AI agents)
+
+See [AGENTS.md](AGENTS.md) for project rules and conventions, and `.agents/workflows/` for step-by-step procedures.
