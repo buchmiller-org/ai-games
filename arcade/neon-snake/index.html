@@ -22,27 +22,11 @@
       padding: 16px;
     }
 
-    .game-page__nav {
-      width: 100%;
-      max-width: 700px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
+
 
     .back-link {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       color: #06d6a0;
-      text-decoration: none;
-      padding: 8px 16px;
       border: 1px solid rgba(6, 214, 160, 0.25);
-      border-radius: 8px;
-      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
     .back-link:hover {
       background: rgba(6, 214, 160, 0.1);
@@ -266,9 +250,10 @@
 
   <div class="game-page">
 
-    <nav class="game-page__nav">
+    <header class="arcade-header">
       <a href="../" class="back-link" id="back-link">← Back to Arcade</a>
-    </nav>
+      <h1 class="arcade-header__title arcade-header__title--gradient title-ns">Neon Snake</h1>
+    </header>
 
     <!-- HUD -->
     <div class="hud">

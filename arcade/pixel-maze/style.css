@@ -1,42 +1,10 @@
 /* games/pixel-maze/style.css */
 
 /* Extend the arcade styles for the game specific elements */
-.game-header {
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 40px;
-  margin-bottom: 20px;
-}
-
-.game-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-weight: 900;
-  margin: 0;
-}
-
-.game-title--maze {
-  background: linear-gradient(135deg, var(--color-accent-yellow), var(--color-accent-cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
 
 .back-link {
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--color-accent-cyan);
-  text-decoration: none;
-  padding: 8px 16px;
   border: 1px solid rgba(6, 214, 160, 0.3);
-  border-radius: var(--radius-btn);
-  transition: all var(--transition-fast);
 }
 
 .back-link:hover {

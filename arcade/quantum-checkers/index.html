@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap">
-  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="../styles.css">
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
   <style>
@@ -41,7 +41,7 @@
       background: var(--color-bg-card);
       border: 1px solid rgba(255, 255, 255, 0.05);
       transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
-      width: 200px;
+      width: 240px;
     }
 
     .player-panel.active {
@@ -284,27 +284,9 @@
       }
     }
 
-    .game-page__nav {
-      width: 100%;
-      max-width: 800px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 16px;
-    }
-
     .back-link {
-      font-family: var(--font-display);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       color: #06d6a0;
-      text-decoration: none;
-      padding: 8px 16px;
       border: 1px solid rgba(6, 214, 160, 0.25);
-      border-radius: 8px;
-      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
     }
 
     .back-link:hover {
@@ -328,6 +310,7 @@
       transition: all 0.2s;
       cursor: pointer;
       margin-top: 8px;
+      white-space: nowrap;
     }
 
     .restart-btn:hover {
@@ -384,13 +367,12 @@
   <div class="orb orb--3" aria-hidden="true"></div>
 
   <div class="page-wrapper">
-    <nav class="game-page__nav">
+    <header class="arcade-header">
       <a href="../" class="back-link">← Back to Arcade</a>
-    </nav>
-    <header class="site-header"
-      style="padding: 10px 0 10px; display: flex; flex-direction: column; align-items: center;">
-      <h1 class="site-title" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">Quantum Checkers</h1>
-      <button onclick="initGame()" class="restart-btn">Restart Game</button>
+      <h1 class="arcade-header__title arcade-header__title--gradient title-qc">Quantum Checkers</h1>
+      <div class="arcade-header__right">
+        <button onclick="initGame()" class="restart-btn" style="margin-top: 0;">Restart Game</button>
+      </div>
     </header>
 
     <div class="game-container">
