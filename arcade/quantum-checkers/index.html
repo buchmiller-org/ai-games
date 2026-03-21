@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Checkers — AI Games Arcade</title>
+  <meta name="description"
+    content="A strategic twist on the classic game featuring teleportation and entangled pieces.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+  <style>
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 800px;
+      margin: 40px auto;
+    }
+
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .player-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+      border-radius: var(--radius-card);
+      background: var(--color-bg-card);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+      width: 200px;
+    }
+
+    .player-panel.active {
+      background: rgba(255, 255, 255, 0.08);
+      transform: scale(1.05);
+    }
+
+    .player-panel--p1.active {
+      border-color: var(--color-accent-cyan);
+      box-shadow: 0 0 20px rgba(6, 214, 160, 0.2);
+    }
+
+    .player-panel--p2.active {
+      border-color: #d946ef;
+      /* Magenta */
+      box-shadow: 0 0 20px rgba(217, 70, 239, 0.2);
+    }
+
+    .player-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .player-panel--p1 .player-name {
+      color: var(--color-accent-blue);
+    }
+
+    .player-panel--p2 .player-name {
+      color: #d946ef;
+    }
+
+    .teleport-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      padding: 8px 16px;
+      border-radius: var(--radius-btn);
+      cursor: pointer;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .teleport-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .teleport-btn.active-mode {
+      animation: pulse 1.5s infinite alternate;
+    }
+
+    .player-panel--p1 .teleport-btn.active-mode {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--color-accent-blue);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+
+    .player-panel--p2 .teleport-btn.active-mode {
+      background: rgba(217, 70, 239, 0.2);
+      border-color: #d946ef;
+      box-shadow: 0 0 15px rgba(217, 70, 239, 0.4);
+    }
+
+    .teleport-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .board-wrapper {
+      position: relative;
+      padding: 12px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(8, 60px);
+      grid-template-rows: repeat(8, 60px);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      background: var(--color-bg);
+    }
+
+    @media (max-width: 600px) {
+      .board {
+        grid-template-columns: repeat(8, 11vw);
+        grid-template-rows: repeat(8, 11vw);
+      }
+
+      .player-panel {
+        width: 140px;
+      }
+
+      .player-name {
+        font-size: 0.9rem;
+      }
+
+      .teleport-btn {
+        font-size: 0.7rem;
+        padding: 6px 10px;
+      }
+    }
+
+    .cell {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .cell.light {
+      background: #111827;
+    }
+
+    .cell.dark {
+      background: #1f2937;
+    }
+
+    .cell.highlight-move {
+      background: rgba(6, 214, 160, 0.25);
+      cursor: pointer;
+    }
+
+    .cell.highlight-move::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(6, 214, 160, 0.6);
+      box-shadow: 0 0 10px rgba(6, 214, 160, 0.8);
+      pointer-events: none;
+    }
+
+    .cell.highlight-teleport {
+      background: rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+    }
+
+    .cell.highlight-teleport.t-p1::after {
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px #38bdf8, inset 0 0 15px #38bdf8;
+    }
+
+    .cell.highlight-teleport.t-p2::after {
+      border-color: #d946ef;
+      box-shadow: 0 0 15px #d946ef, inset 0 0 15px #d946ef;
+    }
+
+    .cell.highlight-teleport::after {
+      content: '';
+      position: absolute;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      animation: pulse 1s infinite alternate;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .piece {
+      width: 70%;
+      height: 70%;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      z-index: 2;
+    }
+
+    .piece.p1 {
+      background: radial-gradient(circle at 30% 30%, #7dd3fc, var(--color-accent-blue));
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 -4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+
+    .piece.p2 {
+      background: radial-gradient(circle at 30% 30%, #f5d0fe, #d946ef);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 -4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(217, 70, 239, 0.5);
+    }
+
+    .piece.selected {
+      transform: scale(1.15);
+    }
+
+    .piece.p1.selected {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5), inset 0 -4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(56, 189, 248, 0.9);
+      border: 2px solid #fff;
+    }
+
+    .piece.p2.selected {
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5), inset 0 -4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(217, 70, 239, 0.9);
+      border: 2px solid #fff;
+    }
+
+    /* Kings representation: inner glowing circle */
+    .piece.king::after {
+      content: '';
+      position: absolute;
+      width: 40%;
+      height: 40%;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 10px #fff;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .teleport-fx {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 50%;
+      z-index: 3;
+      pointer-events: none;
+      animation: flash 0.5s ease-out forwards;
+    }
+
+    @keyframes flash {
+      0% {
+        transform: scale(0.5);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    .game-page__nav {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .back-link {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #06d6a0;
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid rgba(6, 214, 160, 0.25);
+      border-radius: 8px;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .back-link:hover {
+      background: rgba(6, 214, 160, 0.1);
+      border-color: #06d6a0;
+      box-shadow: 0 0 18px rgba(6, 214, 160, 0.15);
+    }
+
+    .restart-btn {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      transition: all 0.2s;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .restart-btn:hover {
+      color: #fff;
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .game-over-modal {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(4px);
+      z-index: 10;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+
+    .game-over-modal h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .game-over-modal button {
+      background: var(--color-accent-blue);
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      border-radius: var(--radius-btn);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.2s;
+    }
+
+    .game-over-modal button:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Animated background from styles.css -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="orb orb--1" aria-hidden="true"></div>
+  <div class="orb orb--2" aria-hidden="true"></div>
+  <div class="orb orb--3" aria-hidden="true"></div>
+
+  <div class="page-wrapper">
+    <nav class="game-page__nav">
+      <a href="../" class="back-link">← Back to Arcade</a>
+    </nav>
+    <header class="site-header"
+      style="padding: 10px 0 10px; display: flex; flex-direction: column; align-items: center;">
+      <h1 class="site-title" style="font-size: clamp(1.8rem, 4vw, 2.8rem);">Quantum Checkers</h1>
+      <button onclick="initGame()" class="restart-btn">Restart Game</button>
+    </header>
+
+    <div class="game-container">
+      <div class="game-header">
+        <div class="player-panel player-panel--p2" id="panel-2">
+          <div class="player-name">Player 2 (Magenta)</div>
+          <button class="teleport-btn" id="tp-btn-2">Teleports: 2</button>
+        </div>
+        <div class="player-panel player-panel--p1 active" id="panel-1">
+          <div class="player-name">Player 1 (Blue)</div>
+          <button class="teleport-btn" id="tp-btn-1">Teleports: 2</button>
+        </div>
+      </div>
+
+      <div class="board-wrapper">
+        <div class="board" id="board"></div>
+        <div class="game-over-modal" id="game-over">
+          <h2 id="winner-text">Player 1 Wins!</h2>
+          <button onclick="initGame()">Play Again</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <script>
+    const ROWS = 8;
+    const COLS = 8;
+    // 0: empty, 1: p1 (blue), 2: p2 (magenta), 3: p1 king, 4: p2 king
+    let boardState = [];
+    let currentPlayer = 1;
+    let selectedPos = null;
+    let validMoves = []; // Array of {r, c, jumps: [{r, c}...]}
+
+    let teleports = { 1: 2, 2: 2 };
+    let teleportMode = false;
+
+    const boardEl = document.getElementById('board');
+    const panel1 = document.getElementById('panel-1');
+    const panel2 = document.getElementById('panel-2');
+    const btnTp1 = document.getElementById('tp-btn-1');
+    const btnTp2 = document.getElementById('tp-btn-2');
+    const gameOverEl = document.getElementById('game-over');
+    const winnerText = document.getElementById('winner-text');
+
+    function initGame() {
+      boardState = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          if ((r + c) % 2 === 1) {
+            if (r < 3) boardState[r][c] = 2; // P2 top
+            else if (r > 4) boardState[r][c] = 1; // P1 bottom
+          }
+        }
+      }
+      currentPlayer = 1;
+      selectedPos = null;
+      validMoves = [];
+      teleports = { 1: 2, 2: 2 };
+      teleportMode = false;
+      gameOverEl.style.display = 'none';
+      updateUI();
+      renderBoard();
+    }
+
+    function renderBoard() {
+      boardEl.innerHTML = '';
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const isDark = (r + c) % 2 === 1;
+          const cell = document.createElement('div');
+          cell.className = `cell ${isDark ? 'dark' : 'light'}`;
+          cell.dataset.r = r;
+          cell.dataset.c = c;
+
+          if (isDark) {
+            cell.addEventListener('click', () => handleCellClick(r, c));
+          }
+
+          // Check highlights
+          const move = validMoves.find(m => m.r === r && m.c === c);
+          if (move && !teleportMode) {
+            cell.classList.add('highlight-move');
+          } else if (teleportMode && isDark && boardState[r][c] === 0 && selectedPos) {
+            cell.classList.add('highlight-teleport');
+            cell.classList.add(currentPlayer === 1 ? 't-p1' : 't-p2');
+          }
+
+          const pieceVal = boardState[r][c];
+          if (pieceVal > 0) {
+            const piece = document.createElement('div');
+            piece.className = 'piece';
+            piece.classList.add(pieceVal === 1 || pieceVal === 3 ? 'p1' : 'p2');
+            if (pieceVal > 2) piece.classList.add('king');
+
+            if (selectedPos && selectedPos.r === r && selectedPos.c === c) {
+              piece.classList.add('selected');
+            }
+
+            cell.appendChild(piece);
+          }
+          boardEl.appendChild(cell);
+        }
+      }
+    }
+
+    function updateUI() {
+      panel1.classList.toggle('active', currentPlayer === 1);
+      panel2.classList.toggle('active', currentPlayer === 2);
+
+      btnTp1.innerText = `Teleports: ${teleports[1]}`;
+      btnTp2.innerText = `Teleports: ${teleports[2]}`;
+
+      btnTp1.disabled = (currentPlayer !== 1 || teleports[1] <= 0);
+      btnTp2.disabled = (currentPlayer !== 2 || teleports[2] <= 0);
+
+      btnTp1.classList.toggle('active-mode', teleportMode && currentPlayer === 1);
+      btnTp2.classList.toggle('active-mode', teleportMode && currentPlayer === 2);
+    }
+
+    btnTp1.addEventListener('click', () => toggleTeleportMode(1));
+    btnTp2.addEventListener('click', () => toggleTeleportMode(2));
+
+    function toggleTeleportMode(player) {
+      if (currentPlayer !== player || teleports[player] <= 0) return;
+      teleportMode = !teleportMode;
+      // If turning off teleport mode, clear selection to re-evaluate normal valid moves
+      if (!teleportMode) selectedPos = null;
+      validMoves = [];
+      updateUI();
+      renderBoard();
+    }
+
+    function handleCellClick(r, c) {
+      const pVal = boardState[r][c];
+      const isMyPiece = (currentPlayer === 1 && (pVal === 1 || pVal === 3)) ||
+        (currentPlayer === 2 && (pVal === 2 || pVal === 4));
+
+      if (isMyPiece) {
+        selectedPos = { r, c };
+        if (!teleportMode) {
+          validMoves = getMovesFor(r, c, false);
+          // If jump is mandatory, filter out non-jumps dynamically if we want standard rules.
+          // For AI Arcade simplicity: a player MUST jump if any piece can jump.
+          // We will enforce jump rules across the whole board to be strictly true to checkers.
+          const allJumps = getAllJumpsFor(currentPlayer);
+          if (allJumps.length > 0) {
+            validMoves = validMoves.filter(m => m.jumps.length > 0);
+            if (validMoves.length === 0) {
+              // Can't select a piece that has no jumps if another piece has a jump.
+              selectedPos = null;
+            }
+          }
+        }
+        renderBoard();
+        return;
+      }
+
+      if (selectedPos && boardState[r][c] === 0) {
+        if (teleportMode) {
+          executeTeleport(r, c);
+        } else {
+          const move = validMoves.find(m => m.r === r && m.c === c);
+          if (move) executeMove(move);
+        }
+      }
+    }
+
+    function executeTeleport(targetR, targetC) {
+      teleports[currentPlayer]--;
+      const pVal = boardState[selectedPos.r][selectedPos.c];
+      boardState[selectedPos.r][selectedPos.c] = 0;
+      boardState[targetR][targetC] = pVal;
+
+      teleportMode = false;
+      addTeleportFx(targetR, targetC);
+
+      checkPromotion(targetR, targetC);
+      endTurn();
+    }
+
+    function addTeleportFx(r, c) {
+      const idx = r * 8 + c;
+      const cell = boardEl.children[idx];
+      const fx = document.createElement('div');
+      fx.className = 'teleport-fx';
+      cell.appendChild(fx);
+      setTimeout(() => fx.remove(), 500);
+    }
+
+    function executeMove(move) {
+      const pVal = boardState[selectedPos.r][selectedPos.c];
+      boardState[selectedPos.r][selectedPos.c] = 0;
+      boardState[move.r][move.c] = pVal;
+
+      // remove jumped pieces
+      for (const j of move.jumps) {
+        boardState[j.r][j.c] = 0;
+      }
+
+      // king promotion ends turn immediately if just promoted (checkers rule)
+      const promoted = checkPromotion(move.r, move.c);
+
+      // multi-jump logic
+      if (!promoted && move.jumps.length > 0) {
+        const furtherJumps = getMovesFor(move.r, move.c, true);
+        if (furtherJumps.length > 0) {
+          selectedPos = { r: move.r, c: move.c };
+          validMoves = furtherJumps;
+          renderBoard();
+          return;
+        }
+      }
+
+      endTurn();
+    }
+
+    function checkPromotion(r, c) {
+      const p = boardState[r][c];
+      if (p === 1 && r === 0) { boardState[r][c] = 3; return true; }
+      if (p === 2 && r === 7) { boardState[r][c] = 4; return true; }
+      return false;
+    }
+
+    function endTurn() {
+      selectedPos = null;
+      validMoves = [];
+      teleportMode = false;
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+
+      checkWin();
+
+      updateUI();
+      renderBoard();
+    }
+
+    function checkWin() {
+      // Very basic win check: if opponent has no valid moves or pieces, current player wins
+      let p1HasMoves = false;
+      let p2HasMoves = false;
+      let p1Count = 0;
+      let p2Count = 0;
+
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const v = boardState[r][c];
+          if (v === 1 || v === 3) { p1Count++; if (getMovesFor(r, c, false).length > 0) p1HasMoves = true; }
+          if (v === 2 || v === 4) { p2Count++; if (getMovesFor(r, c, false).length > 0) p2HasMoves = true; }
+        }
+      }
+
+      if (p1Count === 0 || (!p1HasMoves && p2Count > 0)) showWin(2);
+      else if (p2Count === 0 || (!p2HasMoves && p1Count > 0)) showWin(1);
+    }
+
+    function showWin(winner) {
+      gameOverEl.style.display = 'flex';
+      winnerText.innerText = `Player ${winner} (${winner === 1 ? 'Blue' : 'Magenta'}) Wins!`;
+      winnerText.style.color = winner === 1 ? 'var(--color-accent-blue)' : '#d946ef';
+    }
+
+    function getAllJumpsFor(player) {
+      let jumps = [];
+      for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+          const v = boardState[r][c];
+          if ((player === 1 && (v === 1 || v === 3)) || (player === 2 && (v === 2 || v === 4))) {
+            const m = getMovesFor(r, c, true);
+            if (m.length > 0) jumps.push(...m);
+          }
+        }
+      }
+      return jumps;
+    }
+
+    function getMovesFor(r, c, mustJumpOnly) {
+      const piece = boardState[r][c];
+      const isKing = piece === 3 || piece === 4;
+      const dRow = piece === 1 ? -1 : 1; // 1 goes UP, 2 goes DOWN
+
+      let moves = [];
+      let jumps = [];
+
+      const dirs = isKing ? [[-1, -1], [-1, 1], [1, -1], [1, 1]] : [[dRow, -1], [dRow, 1]];
+
+      for (const [dr, dc] of dirs) {
+        const nr = r + dr, nc = c + dc;
+        if (inBounds(nr, nc)) {
+          // Empty space
+          if (boardState[nr][nc] === 0 && !mustJumpOnly) {
+            moves.push({ r: nr, c: nc, jumps: [] });
+          }
+          // Enemy piece
+          else if (isEnemy(piece, boardState[nr][nc])) {
+            const jr = nr + dr, jc = nc + dc;
+            if (inBounds(jr, jc) && boardState[jr][jc] === 0) {
+              jumps.push({ r: jr, c: jc, jumps: [{ r: nr, c: nc }] });
+            }
+          }
+        }
+      }
+      return jumps.length > 0 ? jumps : moves;
+    }
+
+    function isEnemy(myPiece, otherPiece) {
+      if (otherPiece === 0) return false;
+      const myTeam = (myPiece === 1 || myPiece === 3) ? 1 : 2;
+      const otherTeam = (otherPiece === 1 || otherPiece === 3) ? 1 : 2;
+      return myTeam !== otherTeam;
+    }
+
+    function inBounds(r, c) {
+      return r >= 0 && r < 8 && c >= 0 && c < 8;
+    }
+
+    // Start
+    initGame();
+  </script>
+</body>
+
+</html>

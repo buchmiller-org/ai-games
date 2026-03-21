@@ -72,7 +72,7 @@ Each game page (`arcade/<game-name>/index.html`) should:
 - Include `<meta charset="UTF-8">` and viewport meta tag
 - Include a descriptive `<title>` in the format: `Game Name — AI Games Arcade`
 - Include a meta description
-- Include a "← Back to Arcade" link pointing to `../../`
+- Include a "← Back to Arcade" link pointing to `../`
 
 ## Landing Page Cards
 

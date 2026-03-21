@@ -22,7 +22,7 @@ description: How to add a new game to the AI Games Arcade
    - The shared favicon (copy from an existing game page)
 
    And in the `<body>`:
-   - A "← Back to Arcade" link: `<a href="../../index.html">← Back to Arcade</a>`
+   - A "← Back to Arcade" link: `<a href="../" class="back-link">← Back to Arcade</a>`
    - All game logic (inline or in sibling `.js` files within the same folder)
    - Any CDN library imports via `<script>` or `<link>` tags
 
