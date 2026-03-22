@@ -18,7 +18,7 @@ description: How to add a new game to the AI Games Arcade
      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap">
      ```
-   - The shared stylesheet: `<link rel="stylesheet" href="../../styles.css">`
+   - The shared stylesheet: `<link rel="stylesheet" href="../styles.css">`
    - The shared favicon (copy from an existing game page)
 
    And in the `<body>`:
@@ -29,7 +29,7 @@ description: How to add a new game to the AI Games Arcade
        <h1 class="arcade-header__title">Game Name</h1>
      </header>
      ```
-   - All game logic (inline or in sibling `.js` files within the same folder)
+   - Game logic must be split into a separate `game.js` file and styles into a `style.css` file within the game folder. (Do not use inline JS/CSS).
    - Any CDN library imports via `<script>` or `<link>` tags
 
    > **Important:** Do NOT use `@import` in CSS for Google Fonts — always use `<link>` tags in HTML to avoid font flash (FOUT).

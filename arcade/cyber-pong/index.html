@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber Pong — AI Games Arcade</title>
+  <meta name="description" content="High-speed, physics-based paddle action with explosive power-ups and neon visuals.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏓</text></svg>">
+</head>
+
+<body>
+  <!-- Animated background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="orb orb--1" aria-hidden="true"></div>
+  <div class="orb orb--2" aria-hidden="true"></div>
+  <div class="orb orb--3" aria-hidden="true"></div>
+
+  <div class="page-wrapper">
+    <!-- Header -->
+    <header class="arcade-header">
+      <a href="../" class="back-link">← Back to Arcade</a>
+      <h1 class="arcade-header__title arcade-header__title--gradient title-cp">Cyber Pong</h1>
+    </header>
+
+    <main class="game-container">
+      <div class="score-board">
+        <div class="score" id="score-player">0</div>
+        <div class="score-divider">:</div>
+        <div class="score" id="score-ai">0</div>
+      </div>
+
+      <!-- Start screen -->
+      <div id="start-screen" class="overlay">
+        <h2>Ready?</h2>
+        <p>Use W/S or Up/Down arrows to move your paddle.</p>
+        <div class="difficulty-options">
+          <button class="diff-btn" data-diff="easy">Easy</button>
+          <button class="diff-btn active" data-diff="normal">Normal</button>
+          <button class="diff-btn" data-diff="hard">Hard</button>
+        </div>
+        <button id="start-btn" class="btn" style="margin-top: 15px;">Start Game</button>
+      </div>
+
+      <!-- Game over screen -->
+      <div id="game-over-screen" class="overlay hidden">
+        <h2 id="winner-text">You Win!</h2>
+        <div class="difficulty-options">
+          <button class="diff-btn" data-diff="easy">Easy</button>
+          <button class="diff-btn active" data-diff="normal">Normal</button>
+          <button class="diff-btn" data-diff="hard">Hard</button>
+        </div>
+        <button id="restart-btn" class="btn" style="margin-top: 15px;">Play Again</button>
+      </div>
+
+      <canvas id="gameCanvas" width="800" height="500"></canvas>
+    </main>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+
+</html>
