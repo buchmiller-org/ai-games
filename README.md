@@ -1,35 +1,43 @@
-# AI Games Arcade
+# AI Lab
 
-A collection of AI-generated, client-side-only browser games. No servers, no build steps — just static files served directly in the browser.
+A collection of web projects built with the help of AI.
 
 > **Frameworks & Libraries Are Welcome** — You may use external frameworks and libraries (CSS frameworks, game engines, utility libraries, etc.) as long as they can be imported directly into the page via `<script>` or `<link>` tags (e.g. from a CDN). No package managers or build systems required.
 
-## Games
+## Projects
 
-| Game | Description |
-|------|-------------|
-| [Gravity Drop](arcade/gravity-drop/) | Guide a falling orb through shifting gravity fields |
-| [Neon Snake](arcade/neon-snake/) | Classic snake reimagined with neon visuals |
-| [Pixel Maze](arcade/pixel-maze/) | Navigate procedurally generated mazes |
+### 🕹️ The Arcade
+
+A collection of AI-generated browser arcade games.
+
+### 🧪 The Sandbox
+
+Experimental projects and interactive concepts still in development.
 
 ## Running Locally
 
-Open `index.html` in any browser, or run this from inside the project folder to serve it:
+Run this from inside the project folder to serve it locally at `http://localhost:3000/`:
 
 ```sh
-npx -y serve
+npx -y serve -l 3000
 ```
 
 ## Project Structure
 
 ```
 ai-lab/
-├── index.html          # Landing page
-├── styles.css          # Shared styles
+├── index.html          # AI Lab landing page
+├── styles.css          # Root page styles
 ├── AGENTS.md           # AI agent instructions
 ├── arcade/
+│   ├── index.html      # The Arcade landing page
+│   ├── styles.css      # Shared arcade styles
+│   ├── landing.css     # Arcade landing page styles
 │   └── <game-name>/    # Each game in its own folder
 │       └── index.html
+└── sandbox/
+    ├── index.html      # The Sandbox landing page
+    └── <project-name>/ # Each project in its own folder
 ```
 
 ## Contributing (for AI agents)

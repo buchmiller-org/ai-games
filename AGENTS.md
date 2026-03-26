@@ -1,4 +1,4 @@
-# AI Games Arcade — Agent Instructions
+# The Arcade — Agent Instructions
 
 ## Core Rules
 
@@ -70,7 +70,7 @@ Each game page (`arcade/<game-name>/index.html`) should:
 - Be fully self-contained (all game code in this file or sibling files within the folder)
 - Include the preconnect + Google Fonts `<link>` tags (see Font Loading above)
 - Include `<meta charset="UTF-8">` and viewport meta tag
-- Include a descriptive `<title>` in the format: `Game Name — AI Games Arcade`
+- Include a descriptive `<title>` in the format: `Game Name — Arcade`
 - Include a meta description
 - Include a "← Back to Arcade" link pointing to `../`
 
