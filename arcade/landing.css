@@ -786,8 +786,8 @@
   transform: translateX(4px);
 }
 
-/* --- Upcoming Games Section --- */
-.upcoming-games {
+/* --- Game Ideas Section --- */
+.game-ideas {
   max-width: 800px;
   width: 100%;
   padding: 0 0 80px;
@@ -805,14 +805,14 @@
   text-transform: uppercase;
 }
 
-.upcoming-list {
+.idea-list {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.upcoming-item {
+.idea-item {
   display: flex;
   align-items: flex-start;
   gap: 16px;
@@ -823,12 +823,12 @@
   transition: background var(--transition-fast), transform var(--transition-fast);
 }
 
-.upcoming-item:hover {
+.idea-item:hover {
   background: rgba(255, 255, 255, 0.06);
   transform: translateX(4px);
 }
 
-.upcoming-item__bullet {
+.idea-item__bullet {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -838,33 +838,39 @@
   box-shadow: 0 0 8px rgba(193, 203, 216, 0.4);
 }
 
-.upcoming-item:nth-child(1) .upcoming-item__bullet {
+/* Cycle through 5 accent colors for bullet dots */
+.idea-item:nth-child(5n+1) .idea-item__bullet {
   background: var(--color-accent-purple);
   box-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
 }
 
-.upcoming-item:nth-child(2) .upcoming-item__bullet {
+.idea-item:nth-child(5n+2) .idea-item__bullet {
   background: var(--color-accent-cyan);
   box-shadow: 0 0 10px rgba(6, 214, 160, 0.6);
 }
 
-.upcoming-item:nth-child(3) .upcoming-item__bullet {
-  background: var(--color-accent-orange);
-  box-shadow: 0 0 10px rgba(251, 146, 60, 0.6);
-}
-
-.upcoming-item:nth-child(4) .upcoming-item__bullet {
+.idea-item:nth-child(5n+3) .idea-item__bullet {
   background: var(--color-accent-pink);
   box-shadow: 0 0 10px rgba(244, 114, 182, 0.6);
 }
 
-.upcoming-item__text {
+.idea-item:nth-child(5n+4) .idea-item__bullet {
+  background: var(--color-accent-blue);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+.idea-item:nth-child(5n+5) .idea-item__bullet {
+  background: var(--color-accent-yellow);
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
+}
+
+.idea-item__text {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.upcoming-item__title {
+.idea-item__title {
   font-family: var(--font-display);
   font-size: 1.1rem;
   font-weight: 700;
@@ -872,7 +878,7 @@
   letter-spacing: 0.03em;
 }
 
-.upcoming-item__desc {
+.idea-item__desc {
   font-size: 0.95rem;
   color: var(--color-text-muted);
   line-height: 1.5;
