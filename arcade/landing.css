@@ -175,6 +175,10 @@
   background: linear-gradient(135deg, var(--color-accent-pink), var(--color-accent-cyan));
 }
 
+.game-card--teal-purple::before {
+  background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-purple));
+}
+
 /* Card glow shadow on hover */
 .game-card--purple-cyan:hover {
   box-shadow: 0 12px 50px rgba(168, 85, 247, 0.2), 0 4px 20px rgba(6, 214, 160, 0.15);
@@ -194,6 +198,10 @@
 
 .game-card--pink-cyan:hover {
   box-shadow: 0 12px 50px rgba(244, 114, 182, 0.15), 0 4px 20px rgba(6, 214, 160, 0.15);
+}
+
+.game-card--teal-purple:hover {
+  box-shadow: 0 12px 50px rgba(6, 214, 160, 0.15), 0 4px 20px rgba(168, 85, 247, 0.15);
 }
 
 /* Card Thumbnail Area */
@@ -225,6 +233,10 @@
 
 .game-card__thumb--pong {
   background: linear-gradient(160deg, #1f0d2b 0%, #0d2b24 100%);
+}
+
+.game-card__thumb--parallax {
+  background: linear-gradient(160deg, #0a1520 0%, #12082a 100%);
 }
 
 /* Geometric shapes inside thumbnails */
@@ -704,6 +716,73 @@
   }
 }
 
+/* Parallax Runner shapes */
+.thumb-shape--pr-ground {
+  position: absolute;
+  bottom: 36px;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.thumb-shape--pr-layer {
+  position: absolute;
+  height: 3px;
+  border-radius: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.thumb-shape--pr-far {
+  width: 60px;
+  background: var(--color-accent-purple);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+  bottom: 100px;
+  opacity: 0.4;
+  animation: prLayerDrift 5s ease-in-out infinite alternate;
+}
+
+.thumb-shape--pr-mid {
+  width: 90px;
+  background: var(--color-accent-pink);
+  box-shadow: 0 0 10px rgba(244, 114, 182, 0.5);
+  bottom: 74px;
+  opacity: 0.65;
+  animation: prLayerDrift 4s ease-in-out -1s infinite alternate;
+}
+
+.thumb-shape--pr-near {
+  width: 120px;
+  background: var(--color-accent-cyan);
+  box-shadow: 0 0 12px rgba(6, 214, 160, 0.6);
+  bottom: 48px;
+  opacity: 1;
+  animation: prLayerDrift 3s ease-in-out -2s infinite alternate;
+}
+
+.thumb-shape--pr-runner {
+  position: absolute;
+  width: 10px;
+  height: 18px;
+  background: var(--color-accent-cyan);
+  box-shadow: 0 0 12px rgba(6, 214, 160, 0.7);
+  border-radius: 2px;
+  bottom: 37px;
+  left: calc(50% - 5px);
+  animation: prRunnerBob 0.6s ease-in-out infinite;
+}
+
+@keyframes prLayerDrift {
+  0% { transform: translateX(-50%) translateX(-8px); }
+  100% { transform: translateX(-50%) translateX(8px); }
+}
+
+@keyframes prRunnerBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
 /* Card Body */
 .game-card__body {
   padding: 24px;
@@ -775,6 +854,10 @@
 
 .game-card--pink-cyan:hover .game-card__cta {
   color: var(--color-accent-pink);
+}
+
+.game-card--teal-purple:hover .game-card__cta {
+  color: var(--color-accent-cyan);
 }
 
 .game-card__cta-arrow {

@@ -1,0 +1,271 @@
+/* ============================================
+   Parallax Runner — Game Styles
+   ============================================ */
+
+/* --- Game Page Layout --- */
+.game-page {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0 16px;
+}
+
+/* --- HUD --- */
+.hud {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 16px 12px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.hud__score {
+  color: var(--color-accent-cyan);
+  text-align: left;
+}
+
+.hud__layer {
+  color: var(--color-accent-pink);
+  text-align: center;
+}
+
+.hud__high {
+  color: var(--color-accent-purple);
+  text-align: right;
+}
+
+/* --- Canvas Wrapper --- */
+.canvas-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #050810;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Overlays --- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity 0.4s ease;
+}
+
+.overlay--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.overlay__bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 8, 16, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.overlay__content {
+  position: relative;
+  text-align: center;
+  padding: 32px;
+}
+
+.overlay__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-pink), var(--color-accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+}
+
+.overlay__subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+}
+
+.overlay__controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.control-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}
+
+.control-hint kbd {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 2px;
+}
+
+.overlay__prompt {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  animation: promptPulse 2s ease-in-out infinite;
+}
+
+@keyframes promptPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.overlay__final-label {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+
+.overlay__final-score {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+.overlay__high-score {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--color-accent-purple);
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.overlay__new-best {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--color-accent-yellow);
+  text-shadow: 0 0 20px rgba(250, 204, 21, 0.6);
+  margin-bottom: 16px;
+  animation: promptPulse 1.5s ease-in-out infinite;
+}
+
+/* --- Layer Art (Start Screen) --- */
+.overlay__layer-art {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.layer-bar {
+  height: 4px;
+  border-radius: 2px;
+}
+
+.layer-bar--bg {
+  width: 120px;
+  background: var(--color-accent-purple);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+  opacity: 0.4;
+}
+
+.layer-bar--mid {
+  width: 160px;
+  background: var(--color-accent-pink);
+  box-shadow: 0 0 10px rgba(244, 114, 182, 0.5);
+  opacity: 0.7;
+}
+
+.layer-bar--fg {
+  width: 200px;
+  background: var(--color-accent-cyan);
+  box-shadow: 0 0 10px rgba(6, 214, 160, 0.5);
+  opacity: 1;
+}
+
+/* --- Controls Bar (always visible below canvas) --- */
+.controls-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 0;
+  font-size: 0.7rem;
+  color: rgba(193, 203, 216, 0.45);
+  letter-spacing: 0.04em;
+}
+
+.controls-bar__hint kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 1px;
+}
+
+.controls-bar__sep {
+  color: rgba(255, 255, 255, 0.2);
+  margin: 0 2px;
+}
+
+@media (max-width: 700px) {
+  .canvas-wrap {
+    border-radius: 12px;
+  }
+
+  .hud {
+    gap: 16px;
+    font-size: 0.75rem;
+  }
+}

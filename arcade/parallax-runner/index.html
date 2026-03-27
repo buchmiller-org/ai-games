@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description"
+    content="Parallax Runner — an endless runner where you switch between layered parallax worlds mid-jump. Play free in your browser.">
+  <title>Parallax Runner — Arcade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Shared animated background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="orb orb--1" aria-hidden="true"></div>
+  <div class="orb orb--2" aria-hidden="true"></div>
+
+  <div class="game-page">
+
+    <header class="arcade-header">
+      <a href="../" class="back-link" id="back-link">← Back to Arcade</a>
+      <h1 class="arcade-header__title arcade-header__title--gradient title-pr">Parallax Runner</h1>
+    </header>
+
+    <!-- HUD -->
+    <div class="hud">
+      <span class="hud__score" id="hud-score">Score: 0</span>
+      <span class="hud__layer" id="hud-layer">Layer: MID</span>
+      <span class="hud__high" id="hud-high">Best: 0</span>
+    </div>
+
+    <!-- Canvas + Overlays -->
+    <div class="canvas-wrap" id="canvas-wrap">
+      <canvas id="game-canvas"></canvas>
+
+      <!-- Start Overlay -->
+      <div class="overlay overlay--visible" id="overlay-start">
+        <div class="overlay__bg"></div>
+        <div class="overlay__content">
+          <h1 class="overlay__title">Parallax Runner</h1>
+          <div class="overlay__layer-art">
+            <div class="layer-bar layer-bar--bg"></div>
+            <div class="layer-bar layer-bar--mid"></div>
+            <div class="layer-bar layer-bar--fg"></div>
+          </div>
+          <p class="overlay__subtitle">Switch between layers to dodge obstacles</p>
+          <div class="overlay__controls">
+            <span class="control-hint"><kbd>Space</kbd> Jump</span>
+            <span class="control-hint"><kbd>W</kbd> <kbd>S</kbd> / <kbd>↑</kbd> <kbd>↓</kbd> Switch Layer</span>
+          </div>
+          <p class="overlay__prompt">Press any key or tap to start</p>
+        </div>
+      </div>
+
+      <!-- Game Over Overlay -->
+      <div class="overlay overlay--hidden" id="overlay-gameover">
+        <div class="overlay__bg"></div>
+        <div class="overlay__content">
+          <h2 class="overlay__title">Game Over</h2>
+          <p class="overlay__final-label">Score</p>
+          <div class="overlay__final-score" id="final-score">0</div>
+          <div class="overlay__high-score" id="final-high">Best: 0</div>
+          <div class="overlay__new-best overlay--hidden" id="new-best" style="display:none">★ New Best! ★</div>
+          <div class="overlay__controls">
+            <span class="control-hint"><kbd>Space</kbd> Jump</span>
+            <span class="control-hint"><kbd>W</kbd> <kbd>S</kbd> / <kbd>↑</kbd> <kbd>↓</kbd> Switch Layer</span>
+          </div>
+          <p class="overlay__prompt">Press any key or tap to play again</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls reminder -->
+    <div class="controls-bar">
+      <span class="controls-bar__hint"><kbd>Space</kbd> Jump</span>
+      <span class="controls-bar__sep">·</span>
+      <span class="controls-bar__hint"><kbd>↑</kbd> <kbd>↓</kbd> Switch Layer</span>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+
+</body>
+
+</html>
