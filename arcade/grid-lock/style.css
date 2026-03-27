@@ -1,0 +1,352 @@
+/* Game Page Layout */
+.game-page {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 16px;
+}
+
+/* Header Adjustments */
+.title-gl {
+  background-image: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-yellow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* HUD */
+.hud {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+  padding: 0 16px;
+}
+.hud__scores {
+  display: flex;
+  align-items: baseline;
+}
+.hud__level, .hud__moves {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.hud__level {
+  font-size: 1.2rem;
+  color: var(--color-accent-orange);
+  text-shadow: 0 0 15px rgba(251, 146, 60, 0.4);
+}
+.hud__moves {
+  font-size: 0.95rem;
+  color: var(--color-accent-yellow);
+  text-shadow: 0 0 15px rgba(250, 204, 21, 0.4);
+}
+
+/* Board Container */
+.game-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 12px;
+  background: rgba(10, 15, 30, 0.8);
+  border: 2px solid rgba(251, 146, 60, 0.2);
+  box-shadow: 
+    0 0 30px rgba(251, 146, 60, 0.1),
+    inset 0 0 40px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none; /* Prevent scrolling while dragging in grid */
+}
+
+/* The actual 6x6 grid wrapper */
+.game-board {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  bottom: 10px;
+  right: 10px;
+  /* Exit hole on right border for x=6 y=2 */
+  border-right: 4px solid rgba(251, 146, 60, 0.15); 
+}
+
+/* This creates a pseudo-element gap in the border for the exit */
+.game-board::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 33.333%; /* 2/6 = 33.333% */
+  height: 16.666%; /* 1/6 = 16.666% */
+  width: 4px;
+  background: rgba(10, 15, 30, 0.9); /* Same as game container dark bg */
+  border-right: 4px dashed var(--color-accent-orange);
+  box-shadow: 0 0 10px rgba(251, 146, 60, 0.5);
+  animation: pulseExit 2s infinite ease-in-out;
+}
+
+@keyframes pulseExit {
+  0%, 100% { border-color: rgba(251, 146, 60, 0.5); box-shadow: 0 0 5px rgba(251, 146, 60, 0.3); }
+  50% { border-color: rgba(251, 146, 60, 1); box-shadow: 0 0 15px rgba(251, 146, 60, 0.8); }
+}
+
+/* Grid drawing */
+.game-board-grid-bg {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  pointer-events: none;
+}
+.game-board-cell {
+  border: 1px dashed rgba(255, 255, 255, 0.05);
+}
+
+/* Blocks */
+.block {
+  position: absolute;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.1);
+  cursor: grab;
+  /* Instead of transition css on transform which can fight JS during dragging,
+     we only enable transition when NOT dragging. 
+     We'll toggle a class 'dragging' in JS. */
+  transition: transform 0.15s ease-out;
+  z-index: 10;
+}
+.block:active, .block.dragging {
+  cursor: grabbing;
+}
+.block.dragging {
+  transition: none !important; /* Instant follow pointer */
+  z-index: 20;
+  filter: brightness(1.25);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.6), inset 0 2px 5px rgba(255,255,255,0.2);
+}
+
+/* Block styles */
+.block--v {
+  background: linear-gradient(180deg, var(--color-accent-purple), #4c1d95);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+.block--v::before { /* Grips */
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px; height: 30%;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+.block--h {
+  background: linear-gradient(90deg, var(--color-accent-cyan), #047857);
+  border: 1px solid rgba(6, 214, 160, 0.4);
+}
+.block--h::before { /* Grips */
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%; height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+.block--target {
+  background: linear-gradient(90deg, var(--color-accent-orange), #b45309);
+  border: 1px solid rgba(251, 146, 60, 0.6);
+  box-shadow: 0 0 20px rgba(251, 146, 60, 0.5), inset 0 2px 5px rgba(255,255,255,0.3);
+  z-index: 15;
+}
+.block--target::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(calc(-50% - 4px), -50%);
+  width: 20%; height: 4px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 2px 0 0 2px;
+}
+.block--target::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(calc(-50% + 15px), -50%);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid rgba(255,255,255,0.5);
+}
+
+/* Unified Overlay Manager */
+.overlay-manager {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  transition: opacity 0.3s ease;
+}
+.overlay-manager--hidden { opacity: 0; pointer-events: none; }
+.overlay-manager--visible { opacity: 1; pointer-events: auto; }
+
+.overlay__bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 15, 30, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.overlay-panel {
+  position: absolute;
+  z-index: 1;
+  text-align: center;
+  padding: 32px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.panel--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+}
+.panel--active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+.overlay__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 2.5rem);
+  font-weight: 900;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.overlay__subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.menu-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 12px 24px;
+  background: rgba(251, 146, 60, 0.1);
+  border: 1px solid var(--color-accent-orange);
+  color: var(--color-accent-orange);
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all var(--transition-fast);
+}
+.menu-btn:hover {
+  background: var(--color-accent-orange);
+  color: #000;
+  box-shadow: 0 0 20px rgba(251, 146, 60, 0.4);
+}
+
+.overlay-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.menu-btn--alt {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255,255,255,0.3);
+}
+.menu-btn--alt:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  border-color: rgba(255,255,255,0.5);
+  box-shadow: none;
+}
+
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 400px;
+  width: 100%;
+  margin-top: 10px;
+}
+.level-btn {
+  background: rgba(251, 146, 60, 0.05);
+  border: 1px solid rgba(251, 146, 60, 0.2);
+  border-radius: var(--radius-btn);
+  padding: 16px 8px;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.level-btn:hover:not(:disabled) {
+  background: rgba(251, 146, 60, 0.2);
+  border-color: var(--color-accent-orange);
+  box-shadow: 0 0 15px rgba(251, 146, 60, 0.3);
+}
+.level-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+.level-btn__score {
+  font-size: 0.75rem;
+  font-family: var(--font-body);
+  color: var(--color-accent-yellow);
+  font-weight: 400;
+  min-height: 1.1em;
+}
+
+/* Footer / Controls */
+.controls-row {
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+}
+.icon-btn {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.icon-btn:hover:not(:disabled) {
+  color: #fff;
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.1);
+}
+.icon-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

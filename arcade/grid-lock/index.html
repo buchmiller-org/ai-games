@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+  <meta name="description" content="Grid Lock — slide interlocking pieces on a grid to free the target block.">
+  <title>Grid Lock — Arcade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Shared animated background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="orb orb--1" aria-hidden="true"></div>
+  <div class="orb orb--2" aria-hidden="true"></div>
+
+  <div class="game-page">
+    <header class="arcade-header">
+      <a href="../" class="back-link" id="back-link">← Back to Arcade</a>
+      <h1 class="arcade-header__title arcade-header__title--gradient title-gl">Grid Lock</h1>
+    </header>
+
+    <!-- HUD -->
+    <div class="hud">
+      <span class="hud__level" id="hud-level">Level 1</span>
+      <div class="hud__scores">
+        <span class="hud__moves" id="hud-best" style="margin-right: 12px; opacity: 0.7;">Best: --</span>
+        <span class="hud__moves" id="hud-moves">Moves: 0</span>
+      </div>
+    </div>
+
+    <!-- Game Board -->
+    <div class="game-container">
+      <div id="game-board" class="game-board">
+        <!-- Cells and blocks injected by JS -->
+      </div>
+
+      <!-- Unified Overlays -->
+      <div class="overlay-manager overlay-manager--visible" id="overlay-manager">
+        <div class="overlay__bg"></div>
+        
+        <!-- Start Panel -->
+        <div class="overlay-panel panel--active" id="panel-start">
+          <h1 class="overlay__title title-gl">Grid Lock</h1>
+          <p class="overlay__subtitle">Slide pieces to free the orange target block.</p>
+          <div class="overlay-actions">
+            <button class="menu-btn" id="btn-start">Play Game</button>
+            <button class="menu-btn menu-btn--alt" id="btn-levels">Levels</button>
+          </div>
+        </div>
+
+        <!-- Win / Level Complete Panel -->
+        <div class="overlay-panel panel--hidden" id="panel-win">
+          <h2 class="overlay__title title-gl" id="win-title">Level Complete!</h2>
+          <p class="overlay__subtitle" id="level-stats">Moves: 0</p>
+          <div class="overlay-actions">
+            <button class="menu-btn" id="btn-next">Next Level</button>
+            <button class="menu-btn menu-btn--alt" id="btn-replay">Replay</button>
+            <button class="menu-btn menu-btn--alt" id="btn-win-levels">Levels</button>
+          </div>
+        </div>
+
+        <!-- Levels Panel -->
+        <div class="overlay-panel panel--hidden" id="panel-levels">
+          <h2 class="overlay__title title-gl">Select Level</h2>
+          <div class="levels-grid" id="levels-grid">
+            <!-- Level buttons injected by JS -->
+          </div>
+          <button class="menu-btn menu-btn--alt" id="btn-close-levels" style="margin-top: 24px;">Back</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-row">
+      <button class="icon-btn" id="btn-reset" aria-label="Reset Level">↻ Reset Level</button>
+      <button class="icon-btn" id="btn-controls-levels" aria-label="Level Select">☰ Levels</button>
+    </div>
+
+  </div>
+
+  <script src="levels.js"></script>
+  <script src="game.js"></script>
+</body>
+
+</html>

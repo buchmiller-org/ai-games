@@ -179,6 +179,10 @@
   background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-purple));
 }
 
+.game-card--orange-yellow::before {
+  background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-yellow));
+}
+
 /* Card glow shadow on hover */
 .game-card--purple-cyan:hover {
   box-shadow: 0 12px 50px rgba(168, 85, 247, 0.2), 0 4px 20px rgba(6, 214, 160, 0.15);
@@ -202,6 +206,10 @@
 
 .game-card--teal-purple:hover {
   box-shadow: 0 12px 50px rgba(6, 214, 160, 0.15), 0 4px 20px rgba(168, 85, 247, 0.15);
+}
+
+.game-card--orange-yellow:hover {
+  box-shadow: 0 12px 50px rgba(251, 146, 60, 0.15), 0 4px 20px rgba(250, 204, 21, 0.15);
 }
 
 /* Card Thumbnail Area */
@@ -237,6 +245,10 @@
 
 .game-card__thumb--parallax {
   background: linear-gradient(160deg, #0a1520 0%, #12082a 100%);
+}
+
+.game-card__thumb--grid {
+  background: linear-gradient(160deg, #1f1208 0%, #2a1005 100%);
 }
 
 /* Geometric shapes inside thumbnails */
@@ -783,6 +795,40 @@
   50% { transform: translateY(-3px); }
 }
 
+/* Grid Lock shapes */
+.thumb-shape--gl-board {
+  width: 90px;
+  height: 90px;
+  border: 1px solid rgba(251, 146, 60, 0.2);
+  background: 
+    linear-gradient(rgba(251, 146, 60, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 146, 60, 0.05) 1px, transparent 1px);
+  background-size: 15px 15px;
+  position: absolute;
+  top: calc(50% - 45px);
+  left: calc(50% - 45px);
+}
+
+.thumb-shape--grid-block {
+  position: absolute;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.thumb-shape--grid-target {
+  background: var(--color-accent-orange);
+  box-shadow: 0 0 10px rgba(251, 146, 60, 0.5);
+  border-color: rgba(251, 146, 60, 0.8);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.thumb-shape--gb-1 { width: 28px; height: 13px; top: calc(50% - 29px); left: calc(50% - 44px); } /* Horiz 2 */
+.thumb-shape--gb-2 { width: 13px; height: 43px; top: calc(50% - 44px); left: calc(50% - 14px); } /* Vert 3 */
+.thumb-shape--gb-3 { width: 28px; height: 13px; top: calc(50% - 14px); left: calc(50% - 44px); } /* Target */
+.thumb-shape--gb-4 { width: 13px; height: 28px; top: calc(50% + 1px); left: calc(50% - 29px); } /* Vert 2 */
+.thumb-shape--gb-5 { width: 28px; height: 13px; top: calc(50% + 31px); left: calc(50% - 14px); } /* Horiz 2 */
+
 /* Card Body */
 .game-card__body {
   padding: 24px;
@@ -858,6 +904,10 @@
 
 .game-card--teal-purple:hover .game-card__cta {
   color: var(--color-accent-cyan);
+}
+
+.game-card--orange-yellow:hover .game-card__cta {
+  color: var(--color-accent-yellow);
 }
 
 .game-card__cta-arrow {
