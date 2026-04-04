@@ -1,10 +1,10 @@
 ---
-description: How to add a new game to the AI Games Arcade
+description: How to add a new game to The Arcade
 ---
 
 # Add a New Arcade Game
 
-> **Note:** These instructions are specifically for adding new games to the AI Games Arcade suite (inside the `arcade/` directory). Games built outside of the arcade suite are not bound by these specific rules and structure.
+> **Note:** These instructions are specifically for adding new games to The Arcade suite (inside the `arcade/` directory). Games built outside of the arcade suite are not bound by these specific rules and structure.
 
 
 ## Steps
@@ -13,7 +13,7 @@ description: How to add a new game to the AI Games Arcade
 
 2. **Create `index.html`** — Add an `index.html` file inside the game folder. This is the entry point. Include these in the `<head>`:
    - `<meta charset="UTF-8">` and viewport meta tag
-   - `<title>` in the format `Game Name — AI Games Arcade`
+   - `<title>` in the format `Game Name — Arcade`
    - `<meta name="description">` with a short game summary
    - Preconnect and Google Fonts links (copy from the landing page `index.html`):
      ```html
@@ -32,7 +32,8 @@ description: How to add a new game to the AI Games Arcade
        <h1 class="arcade-header__title">Game Name</h1>
      </header>
      ```
-   - Game logic must be split into a separate `game.js` file and styles into a `style.css` file within the game folder. (Do not use inline JS/CSS).
+   - Game styles must be in a separate `style.css` file within the game folder. (Do not use inline CSS).
+   - Game logic must be in separate `.js` files within the game folder (do not use inline JS). For simpler games a single `game.js` may suffice, but for larger or more complex games, split the logic across multiple focused files (e.g. `map.js`, `entities.js`, `renderer.js`, `game.js`) and load them via `<script>` tags in dependency order.
    - Any CDN library imports via `<script>` or `<link>` tags. Feel free to use CDN game libraries for more complex games.
 
    > **Important:** Do NOT use `@import` in CSS for Google Fonts — always use `<link>` tags in HTML to avoid font flash (FOUT).
