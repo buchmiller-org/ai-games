@@ -1,0 +1,226 @@
+/* ============================================
+   Warp Chess - Specific Styles
+   ============================================ */
+
+.disclaimer-banner {
+  max-width: 600px;
+  margin: 0 auto 20px;
+  background: rgba(250, 204, 21, 0.1);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  color: #fde047;
+  padding: 12px 20px;
+  border-radius: var(--radius-btn);
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 15px rgba(250, 204, 21, 0.05);
+}
+
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+}
+
+#game-ui {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  background: var(--color-bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-card);
+  padding: 30px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  max-width: 600px;
+  width: 100%;
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.status-msg {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-accent-cyan);
+  text-shadow: 0 0 10px rgba(6, 214, 160, 0.5);
+}
+
+.status-msg.check {
+  color: var(--color-accent-pink);
+  text-shadow: 0 0 15px rgba(244, 114, 182, 0.8);
+}
+
+.status-msg.mate {
+  color: var(--color-accent-pink);
+  text-shadow: 0 0 20px rgba(244, 114, 182, 1);
+  animation: pulse 2s infinite;
+}
+
+.arcade-btn {
+  background: transparent;
+  border: 1px solid var(--color-accent-purple);
+  color: var(--color-accent-purple);
+  padding: 10px 20px;
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+}
+
+.arcade-btn:hover {
+  background: var(--color-accent-purple);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+  transform: translateY(-2px);
+}
+
+/* --- Chess Board --- */
+.board-container {
+  width: 100%;
+  max-width: 480px; /* 8x60px cells */
+  aspect-ratio: 1 / 1;
+}
+
+.chess-board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--color-accent-blue);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.square {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: background var(--transition-fast);
+}
+
+.square.light {
+  background: #1a2333;
+}
+
+.square.dark {
+  background: #0d1421;
+}
+
+.square.selected {
+  background: rgba(6, 214, 160, 0.4);
+  box-shadow: inset 0 0 15px rgba(6, 214, 160, 0.8);
+}
+
+.square.highlight {
+  background: rgba(56, 189, 248, 0.3);
+}
+
+.square.highlight::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-accent-cyan);
+  opacity: 0.5;
+}
+
+/* Give hover an interactive feel */
+.square:hover {
+  cursor: pointer;
+}
+.square.light:hover {
+  background: #232f45;
+}
+.square.dark:hover {
+  background: #152236;
+}
+
+/* --- Chess Pieces --- */
+.piece {
+  font-size: clamp(2rem, 8vw, 3rem);
+  user-select: none;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  text-shadow: 0 5px 10px rgba(0,0,0,0.5);
+}
+
+.piece.white {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.piece.black {
+  color: #a8b2c1;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* --- Portals --- */
+.portal {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  border: 4px solid;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.portal-a {
+  border-color: var(--color-accent-purple);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.8), inset 0 0 10px rgba(168, 85, 247, 0.5);
+  animation: portalSpin 4s linear infinite;
+}
+
+.portal-b {
+  border-color: var(--color-accent-orange);
+  box-shadow: 0 0 15px rgba(251, 146, 60, 0.8), inset 0 0 10px rgba(251, 146, 60, 0.5);
+  animation: portalSpin 4s linear infinite reverse;
+}
+
+@keyframes portalSpin {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(180deg); }
+  100% { transform: scale(1) rotate(360deg); }
+}
+
+.teleporting {
+  animation: teleportAnim 0.6s ease-in-out forwards;
+}
+
+@keyframes teleportAnim {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0); opacity: 0; filter: blur(5px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Classic chess with a twist — pieces can teleport through warp portals on the board.">
+  <title>Warp Chess — Arcade</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap">
+  
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="style.css">
+  
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+</head>
+<body>
+
+  <!-- Animated background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <div class="page-wrapper">
+    <!-- Standard Arcade Header -->
+    <header class="arcade-header">
+      <a href="../" class="back-link">← Back to Arcade</a>
+      <h1 class="arcade-header__title">Warp Chess</h1>
+    </header>
+
+    <div class="disclaimer-banner">
+      <strong>⚠️ EARLY ACCESS:</strong> The portal teleportation mechanics may contain visual or logical bugs in this prototype.
+    </div>
+
+    <main class="game-container">
+      <div id="game-ui">
+        <div class="game-info">
+          <div id="status" class="status-msg">White to move</div>
+          <div id="captured-pieces" class="captured-pieces"></div>
+          <button id="reset-btn" class="arcade-btn">Reset Game</button>
+        </div>
+        
+        <div class="board-container">
+          <div id="board" class="chess-board"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Load chess.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <!-- Load game logic -->
+  <script src="game.js"></script>
+
+</body>
+</html>

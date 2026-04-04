@@ -237,6 +237,10 @@
   background: linear-gradient(160deg, #061a14 0%, #0a1e28 100%);
 }
 
+.game-card__thumb--warp-chess {
+  background: linear-gradient(160deg, #1f0d2b 0%, #1e1b4b 100%);
+}
+
 /* Geometric shapes inside thumbnails */
 .thumb-shape {
   position: absolute;
@@ -1212,6 +1216,51 @@
 
 .game-card:hover .game-card__cta-arrow {
   transform: translateX(4px);
+}
+
+/* Warp Chess shapes */
+.wc-preview {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.thumb-shape--wc-portal {
+  width: 60px;
+  height: 20px;
+  border-radius: 50%;
+  background: transparent;
+  border: 3px solid var(--color-accent-purple);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.8), inset 0 0 10px rgba(168, 85, 247, 0.5);
+  position: absolute;
+  bottom: 10px;
+  left: calc(50% - 30px);
+  transform: perspective(300px) rotateX(60deg);
+  animation: wcPortalSpin 4s linear infinite;
+}
+
+.thumb-shape--wc-piece {
+  font-size: 40px;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(6, 214, 160, 0.8);
+  font-family: Arial, sans-serif; /* Fallback for chess piece */
+  position: absolute;
+  bottom: 12px;
+  left: calc(50% - 20px);
+  animation: wcPieceHover 3s ease-in-out infinite alternate;
+}
+
+@keyframes wcPortalSpin {
+  0% { transform: perspective(300px) rotateX(60deg) rotateZ(0deg); }
+  100% { transform: perspective(300px) rotateX(60deg) rotateZ(360deg); }
+}
+
+@keyframes wcPieceHover {
+  0% { transform: translateY(0); filter: drop-shadow(0 0 10px rgba(6, 214, 160, 0.6)); }
+  100% { transform: translateY(-10px); filter: drop-shadow(0 0 20px rgba(6, 214, 160, 1)); }
 }
 
 /* --- Game Ideas Section --- */
