@@ -55,13 +55,9 @@ The game cards use a `::before` pseudo-element for a gradient border glow on hov
 
 ### New card color themes
 
-When creating a new card color theme (e.g. `game-card--blue-green`), you must define:
+The game cards automatically cycle through 5 distinct color themes using CSS `:nth-child` rules. You do not need to add or define new classes for the border glow, box-shadow glow, or play button color. When adding a new game card, you only need to define its thumbnail background gradient:
 
-1. `game-card--<theme>::before` — the gradient border glow
-2. `game-card--<theme>:hover` — the box-shadow glow
-3. `game-card__thumb--<game>` — the thumbnail background gradient
-
-The CTA text on hover defaults to white. Only `game-card--purple-cyan` overrides this to cyan. New themes should use white unless the glow color provides enough contrast.
+1. `game-card__thumb--<game>` — the thumbnail background gradient
 
 ## Game Page Conventions
 
@@ -79,7 +75,7 @@ Each game page (`arcade/<game-name>/index.html`) should:
 When adding a game, a card must be added to `index.html` inside the `<section class="games-grid">` element. Each card follows this pattern:
 
 ```html
-<a href="arcade/<game-name>/" class="game-card game-card--<color-theme>" id="card-<game-name>">
+<a href="arcade/<game-name>/" class="game-card" id="card-<game-name>">
   <div class="game-card__thumb game-card__thumb--<game>">
     <!-- Abstract thumbnail shapes -->
   </div>
@@ -91,7 +87,7 @@ When adding a game, a card must be added to `index.html` inside the `<section cl
 </a>
 ```
 
-Existing color themes: `game-card--purple-cyan`, `game-card--orange-pink`, `game-card--green-yellow`. New cards can use an existing theme or define a new one in `styles.css`.
+The game card will automatically receive a color theme based on its order in the grid.
 
 ## Local Development
 

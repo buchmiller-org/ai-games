@@ -38,12 +38,6 @@ description: How to add a new game to The Arcade
 
    > **Important:** Do NOT use `@import` in CSS for Google Fonts — always use `<link>` tags in HTML to avoid font flash (FOUT).
 
-3. **Add a card to the landing page** — Open the arcade `index.html` (`arcade/index.html`) and add a new `<a class="game-card">` element inside `<section class="games-grid">`. Follow the card HTML pattern documented in `AGENTS.md`. Choose an existing color theme or create a new one.
+3. **Add a card to the landing page** — Open the arcade `index.html` (`arcade/index.html`) and add a new `<a class="game-card">` element inside `<section class="games-grid">`. Follow the card HTML pattern documented in `AGENTS.md`.
 
 4. **Add thumbnail shapes** — Inside the card's `game-card__thumb` div, add abstract SVG or CSS shapes that visually represent the game. Look at existing cards in `index.html` for examples. These should have limited motion to keep the page from being too busy.
-
-5. **(If creating a new color theme)** — Define these rules in `styles.css`:
-   - `game-card--<theme>::before` — gradient border glow
-   - `game-card--<theme>:hover` — box-shadow glow
-   - `game-card__thumb--<game>` — thumbnail background gradient
-   - Keep hover CTA color as white (default) unless a brighter accent has high contrast against the dark card body

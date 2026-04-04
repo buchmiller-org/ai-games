@@ -154,95 +154,33 @@
   opacity: 1;
 }
 
-/* Glow variants */
-.game-card--purple-cyan::before {
-  background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-cyan));
-}
+/* --- Game Card Cycle Themes --- */
+/* Theme 1: Purple & Cyan */
+.game-card:nth-child(5n + 1)::before { background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-cyan)); }
+.game-card:nth-child(5n + 1):hover { box-shadow: 0 12px 50px rgba(168, 85, 247, 0.2), 0 4px 20px rgba(6, 214, 160, 0.15); }
+.game-card:nth-child(5n + 1):hover .game-card__cta { color: var(--color-accent-cyan); }
 
-.game-card--orange-pink::before {
-  background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-pink));
-}
+/* Theme 2: Cyan & Pink */
+.game-card:nth-child(5n + 2)::before { background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-pink)); }
+.game-card:nth-child(5n + 2):hover { box-shadow: 0 12px 50px rgba(6, 214, 160, 0.2), 0 4px 20px rgba(244, 114, 182, 0.15); }
+.game-card:nth-child(5n + 2):hover .game-card__cta { color: var(--color-accent-pink); }
 
-.game-card--green-yellow::before {
-  background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-yellow));
-}
+/* Theme 3: Pink & Orange */
+.game-card:nth-child(5n + 3)::before { background: linear-gradient(135deg, var(--color-accent-pink), var(--color-accent-orange)); }
+.game-card:nth-child(5n + 3):hover { box-shadow: 0 12px 50px rgba(244, 114, 182, 0.2), 0 4px 20px rgba(251, 146, 60, 0.15); }
+.game-card:nth-child(5n + 3):hover .game-card__cta { color: var(--color-accent-orange); }
 
-.game-card--blue-magenta::before {
-  background: linear-gradient(135deg, var(--color-accent-blue), #d946ef);
-}
+/* Theme 4: Orange & Yellow */
+.game-card:nth-child(5n + 4)::before { background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-yellow)); }
+.game-card:nth-child(5n + 4):hover { box-shadow: 0 12px 50px rgba(251, 146, 60, 0.2), 0 4px 20px rgba(250, 204, 21, 0.15); }
+.game-card:nth-child(5n + 4):hover .game-card__cta { color: var(--color-accent-yellow); }
 
-.game-card--pink-cyan::before {
-  background: linear-gradient(135deg, var(--color-accent-pink), var(--color-accent-cyan));
-}
-
-.game-card--teal-purple::before {
-  background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-purple));
-}
-
-.game-card--orange-yellow::before {
-  background: linear-gradient(135deg, var(--color-accent-orange), var(--color-accent-yellow));
-}
-
-.game-card--amber-purple::before {
-  background: linear-gradient(135deg, #f59e0b, var(--color-accent-purple));
-}
-
-.game-card--red-orange::before {
-  background: linear-gradient(135deg, #ef4444, #fb923c);
-}
-
-.game-card--cyan-indigo::before {
-  background: linear-gradient(135deg, #38bdf8, #6366f1);
-}
+/* Theme 5: Blue & Magenta */
+.game-card:nth-child(5n + 5)::before { background: linear-gradient(135deg, var(--color-accent-blue), #d946ef); }
+.game-card:nth-child(5n + 5):hover { box-shadow: 0 12px 50px rgba(56, 189, 248, 0.2), 0 4px 20px rgba(217, 70, 239, 0.15); }
+.game-card:nth-child(5n + 5):hover .game-card__cta { color: #d946ef; }
 
 /* Card glow shadow on hover */
-.game-card--purple-cyan:hover {
-  box-shadow: 0 12px 50px rgba(168, 85, 247, 0.2), 0 4px 20px rgba(6, 214, 160, 0.15);
-}
-
-.game-card--orange-pink:hover {
-  box-shadow: 0 12px 50px rgba(251, 146, 60, 0.2), 0 4px 20px rgba(244, 114, 182, 0.15);
-}
-
-.game-card--green-yellow:hover {
-  box-shadow: 0 12px 50px rgba(6, 214, 160, 0.12), 0 4px 20px rgba(250, 204, 21, 0.08);
-}
-
-.game-card--blue-magenta:hover {
-  box-shadow: 0 12px 50px rgba(56, 189, 248, 0.15), 0 4px 20px rgba(217, 70, 239, 0.15);
-}
-
-.game-card--pink-cyan:hover {
-  box-shadow: 0 12px 50px rgba(244, 114, 182, 0.15), 0 4px 20px rgba(6, 214, 160, 0.15);
-}
-
-.game-card--teal-purple:hover {
-  box-shadow: 0 12px 50px rgba(6, 214, 160, 0.15), 0 4px 20px rgba(168, 85, 247, 0.15);
-}
-
-.game-card--orange-yellow:hover {
-  box-shadow: 0 12px 50px rgba(251, 146, 60, 0.15), 0 4px 20px rgba(250, 204, 21, 0.15);
-}
-
-.game-card--amber-purple:hover {
-  box-shadow: 0 12px 50px rgba(245, 158, 11, 0.15), 0 4px 20px rgba(168, 85, 247, 0.15);
-}
-
-.game-card--red-orange:hover {
-  box-shadow: 0 12px 50px rgba(239, 68, 68, 0.15), 0 4px 20px rgba(251, 146, 60, 0.15);
-}
-
-.game-card--cyan-indigo:hover {
-  box-shadow: 0 12px 50px rgba(56, 189, 248, 0.15), 0 4px 20px rgba(99, 102, 241, 0.15);
-}
-
-.game-card--emerald-cyan::before {
-  background: linear-gradient(135deg, #06d6a0, #38bdf8);
-}
-
-.game-card--emerald-cyan:hover {
-  box-shadow: 0 12px 50px rgba(6, 214, 160, 0.2), 0 4px 20px rgba(56, 189, 248, 0.15);
-}
 
 /* Card Thumbnail Area */
 .game-card__thumb {
@@ -1267,50 +1205,6 @@
   color: #ffffff;
 }
 
-.game-card--purple-cyan:hover .game-card__cta {
-  color: var(--color-accent-cyan);
-}
-
-.game-card--orange-pink:hover .game-card__cta {
-  color: var(--color-accent-orange);
-}
-
-.game-card--green-yellow:hover .game-card__cta {
-  color: var(--color-accent-yellow);
-}
-
-.game-card--blue-magenta:hover .game-card__cta {
-  color: #d946ef;
-}
-
-.game-card--pink-cyan:hover .game-card__cta {
-  color: var(--color-accent-pink);
-}
-
-.game-card--teal-purple:hover .game-card__cta {
-  color: var(--color-accent-cyan);
-}
-
-.game-card--orange-yellow:hover .game-card__cta {
-  color: var(--color-accent-yellow);
-}
-
-.game-card--amber-purple:hover .game-card__cta {
-  color: #f59e0b;
-}
-
-.game-card--red-orange:hover .game-card__cta {
-  color: #fb923c;
-}
-
-.game-card--cyan-indigo:hover .game-card__cta {
-  color: #38bdf8;
-}
-
-.game-card--emerald-cyan:hover .game-card__cta {
-  color: #06d6a0;
-}
-
 .game-card__cta-arrow {
   transition: transform var(--transition-fast);
   font-size: 1.1rem;
@@ -1441,7 +1335,6 @@
   background-clip: text;
   font-weight: 500;
 }
-
 
 /* --- Responsive --- */
 @media (max-width: 700px) {
